@@ -18,13 +18,12 @@ public class Role {
     private String description;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<RolePermission> rolePermissions;
+    private Set<User> users; // This represents the users assigned to this role
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<UserRole> userRoles;
+    private Set<RolePermission> rolePermissions;
 
     // Getters and Setters
-
     public UUID getRoleId() {
         return roleId;
     }
@@ -49,6 +48,14 @@ public class Role {
         this.description = description;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
     public Set<RolePermission> getRolePermissions() {
         return rolePermissions;
     }
@@ -56,13 +63,4 @@ public class Role {
     public void setRolePermissions(Set<RolePermission> rolePermissions) {
         this.rolePermissions = rolePermissions;
     }
-
-    public Set<UserRole> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(Set<UserRole> userRoles) {
-        this.userRoles = userRoles;
-    }
-
 }

@@ -15,7 +15,7 @@ RUN chmod +x mvnw
 COPY pom.xml .
 
 # Download dependencies
-RUN ./mvnw dependency:resolve
+RUN ./mvnw clean dependency:resolve
 
 # Copy the application source code
 COPY src ./src

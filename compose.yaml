@@ -1,5 +1,5 @@
 services:
-  spring-boot-app:
+  ecommerce-boot-app:
     build: .
     container_name: ecommerce-backend-app
     ports:

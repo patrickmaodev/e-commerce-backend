@@ -1,7 +1,6 @@
 package com.ecommerce.e_commerce.auth.entities;
 
 import jakarta.persistence.*;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +23,9 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private String password;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -34,8 +36,10 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Admin admin;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<UserRole> userRoles;
+    // Change from @ManyToMany to @ManyToOne to enforce a single role per user
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id") // The foreign key to the role
+    private Role role; // Each user has one role
 
     // Getters and Setters
     public UUID getUserId() {
@@ -110,11 +114,20 @@ public class User {
         this.admin = admin;
     }
 
-    public Set<UserRole> getUserRoles() {
-        return userRoles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setUserRoles(Set<UserRole> userRoles) {
-        this.userRoles = userRoles;
+    public void setRole(Role role) {
+        this.role = role;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }

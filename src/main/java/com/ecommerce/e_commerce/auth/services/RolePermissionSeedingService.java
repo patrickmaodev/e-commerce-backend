@@ -19,9 +19,6 @@ public class RolePermissionSeedingService {
     private RoleRepository roleRepository;
 
     @Autowired
-    private UserRoleRepository userRoleRepository;
-
-    @Autowired
     private PermissionRepository permissionRepository;
 
     @Autowired

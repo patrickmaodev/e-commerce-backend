@@ -20,9 +20,6 @@ public class UserSeedingService {
     @Autowired
     private RoleRepository roleRepository;
 
-    @Autowired
-    private UserRoleRepository userRoleRepository;
-
     // This method is executed after the Spring context is initialized
     @PostConstruct
     public void seedSuperAdmin() {
@@ -69,6 +66,8 @@ public class UserSeedingService {
                 superAdminUser.setEmail("superadmin@ecommerce.com");
                 superAdminUser.setPhoneNumber("1234567890");
                 superAdminUser.setStatus("active");
+
+                // Save the superadmin user
                 userRepository.save(superAdminUser);
 
                 // Create the admin record for the superadmin user
@@ -80,10 +79,9 @@ public class UserSeedingService {
                 Role superAdminRole = roleRepository.findByRoleName("superadmin");
 
                 if (superAdminRole != null) {
-                    UserRole userRole = new UserRole();
-                    userRole.setUser(superAdminUser);
-                    userRole.setRole(superAdminRole);
-                    userRoleRepository.save(userRole);
+                    // Directly set the superadmin role to the user (ManyToOne relationship)
+                    superAdminUser.setRole(superAdminRole);
+                    userRepository.save(superAdminUser); // Save the updated user with roles
                     System.out.println("Superadmin user created successfully!");
                 } else {
                     System.err.println("Superadmin role does not exist, cannot assign role to user.");
@@ -95,6 +93,4 @@ public class UserSeedingService {
             System.err.println("Error creating superadmin user: " + e.getMessage());
         }
     }
-
-
 }
